@@ -7,14 +7,14 @@ app = Flask(__name__)
 def hello_world():
     return render_template('hello.html')
 
-# Déposez votre code à partir d'ici :
+# Exercice 1 / 6
 @app.route("/contact")
-def MaPremiereAPI():
-    return "<h2>Ma page de contact</h2>"  
+def contact():
+    return render_template("contact.html")
 
+# Exercice 2
 @app.get("/paris")
 def api_paris():
-    
     url = "https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&hourly=temperature_2m"
     response = requests.get(url)
     data = response.json()
@@ -30,16 +30,19 @@ def api_paris():
 
     return jsonify(result)
 
-@app.route("/rapport")
-def mongraphique():
-    return render_template("graphique.html")
+# Exercice 5
+@app.route("/histogramme")
+def histogramme():
+    url = "https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&daily=temperature_2m_max&forecast_days=7&timezone=Europe%2FParis"
+    response = requests.get(url)
+    data = response.json()
 
-from flask import Flask, jsonify, render_template
-import requests
+    dates = data["daily"]["time"]
+    temperatures = data["daily"]["temperature_2m_max"]
 
-app = Flask(__name__)
+    meteo = list(zip(dates, temperatures))
 
-# Ne rien mettre après ce commentaire
-    
+    return render_template("histogramme.html", meteo=meteo)
+
 if __name__ == "__main__":
-  app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
