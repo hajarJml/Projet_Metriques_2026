@@ -100,6 +100,21 @@
     function showStatus(msg) {
       document.getElementById('status').textContent = msg;
     }
+
+
+    @app.route("/histogramme")
+def histogramme():
+    url = "https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&daily=temperature_2m_max&forecast_days=7&timezone=Europe%2FParis"
+    
+    response = requests.get(url)
+    data = response.json()
+
+    dates = data["daily"]["time"]
+    temperatures = data["daily"]["temperature_2m_max"]
+
+    meteo = list(zip(dates, temperatures))
+
+    return render_template("histogramme.html", meteo=meteo)
   </script>
 </body>
 </html>
