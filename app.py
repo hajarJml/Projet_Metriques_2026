@@ -34,7 +34,10 @@ def api_paris():
 def mongraphique():
     return render_template("graphique.html")
 
+from flask import Flask, jsonify, render_template
+import requests
 
+app = Flask(__name__)
 
 # Ne rien mettre après ce commentaire
     
