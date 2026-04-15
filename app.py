@@ -44,6 +44,20 @@ def histogramme():
 
     return render_template("histogramme.html", meteo=meteo)
 
+@app.route("/atelier")
+def atelier():
+    url = "https://api.open-meteo.com/v1/forecast?latitude=50.6292&longitude=3.0573&daily=precipitation_sum&forecast_days=7&timezone=Europe%2FParis"
+
+    response = requests.get(url)
+    data = response.json()
+
+    dates = data["daily"]["time"]
+    pluie = data["daily"]["precipitation_sum"]
+
+    meteo = list(zip(dates, pluie))
+
+    return render_template("atelier.html", meteo=meteo)
+
 
 
 
