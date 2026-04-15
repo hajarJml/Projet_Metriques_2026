@@ -44,5 +44,11 @@ def histogramme():
 
     return render_template("histogramme.html", meteo=meteo)
 
+# Exercice 6
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
