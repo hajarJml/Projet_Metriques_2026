@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Atelier météo</title>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+
+var data = google.visualization.arrayToDataTable([
+['Jour', 'Précipitations'],
+
+{% for date, pluie in meteo %}
+['{{ date }}', {{ pluie }}],
+{% endfor %}
+
+]);
+
+var options = {
+title: 'Répartition des précipitations à Lille',
+pieHole: 0.4,
+backgroundColor:'#f5f7fa',
+chartArea:{width:'90%',height:'80%'}
+};
+
+var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+chart.draw(data, options);
+}
+</script>
+
+<style>
+body{
+font-family:Arial;
+background:linear-gradient(135deg,#dbeafe,#eff6ff);
+text-align:center;
+padding:40px;
+}
+
+.container{
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+max-width:900px;
+margin:auto;
+}
+
+h1{
+color:#1e3a8a;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+<h1>Atelier Séquence 4</h1>
+<p>Dashboard météo personnalisé</p>
+
+<div id="piechart" style="width: 100%; height: 500px;"></div>
+
+</div>
+
+</body>
+</html>
